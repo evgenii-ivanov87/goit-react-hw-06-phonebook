@@ -16,17 +16,17 @@ class App extends Component {
     filter: '',
   };
 
-  addContact = (name, number) => {
-    const contact = {
-      id: shortid.generate(),
-      name,
-      number,
-    };
+  // addContact = (name, number) => {
+  //   const contact = {
+  //     id: shortid.generate(),
+  //     name,
+  //     number,
+  //   };
 
-    this.setState(({ contacts }) => ({
-      contacts: [contact, ...contacts],
-    }));
-  };
+  //   this.setState(({ contacts }) => ({
+  //     contacts: [contact, ...contacts],
+  //   }));
+  // };
 
   changeFilter = e => {
     this.setState({ filter: e.currentTarget.value });
@@ -41,11 +41,11 @@ class App extends Component {
     );
   };
 
-  deleteContact = contactId => {
-    this.setState(prevState => ({
-      contacts: prevState.contacts.filter(contact => contact.id !== contactId),
-    }));
-  };
+  // deleteContact = contactId => {
+  //   this.setState(prevState => ({
+  //     contacts: prevState.contacts.filter(contact => contact.id !== contactId),
+  //   }));
+  // };
 
   render() {
     const { filter, contacts } = this.state;
@@ -53,14 +53,11 @@ class App extends Component {
     return (
       <>
         <Section title="Phonebook">
-          <Form onSubmit={this.addContact} contacts={contacts} />
+          <Form  contacts={contacts} />
         </Section>
         <Section title="Contacts">
           <Filter value={filter} onChange={this.changeFilter} />
-          <ContactList
-            contacts={visibleContacts}
-            onDeleteContact={this.deleteContact}
-          />
+          <ContactList />
         </Section>
       </>
     );

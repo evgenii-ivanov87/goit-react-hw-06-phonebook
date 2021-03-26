@@ -1,5 +1,7 @@
 import PropTypes from 'prop-types';
 import s from './ContactList.module.css';
+import { connect } from 'react-redux'
+import phonebookActions from '../../redux/phonebook/phonebook-actions'
 
 function ContactList({ contacts, onDeleteContact }) {
   return (
@@ -34,4 +36,12 @@ ContactList.propTypes = {
   onDeleteContact: PropTypes.func.isRequired,
 };
 
-export default ContactList;
+const mapStateToProps= state => ({
+  contacts: state.contacts.items
+})
+
+const mapPropsToDispatch = dispath => ({
+  onDeleteContact: (id) => dispath(phonebookActions.deleteContacts(id)),
+})
+
+export default connect(mapStateToProps,mapPropsToDispatch)(ContactList);
