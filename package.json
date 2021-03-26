@@ -2,7 +2,7 @@
   "name": "goit-react-hw-02-phonebook",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://evgenii-ivanov87.github.io/goit-react-hw-02-phonebook",
+  "homepage": "https://evgenii-ivanov87.github.io/goit-react-hw-06-phonebook",
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
@@ -44,6 +44,7 @@
   "devDependencies": {
     "husky": "^5.1.1",
     "lint-staged": "^10.5.4",
-    "prettier": "^2.2.1"
+    "prettier": "^2.2.1",
+    "redux-devtools-extension": "^2.13.9"
   }
 }
