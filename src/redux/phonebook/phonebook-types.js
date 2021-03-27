@@ -1,6 +1,6 @@
 const ADD = 'phonebook/add';
 const DELETE = 'phonebook/delete';
-const FILTER = 'phonebook/filter';
+const FILTERS = 'phonebook/filter';
 
 
-export default { ADD, DELETE, FILTER };
+export default { ADD, DELETE, FILTERS };

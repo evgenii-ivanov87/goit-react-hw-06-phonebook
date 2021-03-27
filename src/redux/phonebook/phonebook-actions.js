@@ -13,8 +13,13 @@ const addContact = (name, number) => ({
 
 const deleteContacts = (contactId) => ({
     type: types.DELETE,
-    pauload: contactId
+    payload: contactId
 })
 
+const filterContacts = (value) => ({
+    type: types.FILTERS,
+        payload: value
+    
+})
 
-export default { addContact, deleteContacts };
+export default { addContact, deleteContacts, filterContacts };

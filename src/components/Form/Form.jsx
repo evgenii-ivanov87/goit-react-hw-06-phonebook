@@ -96,9 +96,12 @@ class Form extends Component {
     );
   }
 }
-
-const mapDispatchToProps = dispatch => ({
-  onSubmit:( name, number )=> dispatch(phonebookActions.addContact( name, number ))
+const mapStateToProps= state => ({
+  contacts: state.contacts.items, 
 })
 
-export default connect(null,mapDispatchToProps)(Form);
+const mapDispatchToProps = dispatch => ({
+  onSubmit:( name, number )=> dispatch(phonebookActions.addContact( name, number )),
+})
+
+export default connect(mapStateToProps,mapDispatchToProps)(Form);

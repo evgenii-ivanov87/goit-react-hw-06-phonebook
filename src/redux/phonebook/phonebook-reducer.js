@@ -2,6 +2,7 @@ import { combineReducers } from "redux"
 import types from './phonebook-types'
 
 const items = (state = [], { type, payload }) => {
+    
     switch (type) {
         case types.ADD:
             return [...state, payload];
@@ -12,9 +13,18 @@ const items = (state = [], { type, payload }) => {
     }
 }
 
-const filter = (state = '', actions) => state
+
+const filters = (state = '', { type, payload }) => {
+    switch (type) {
+        case types.FILTERS:
+            return  payload;
+        
+        default:
+            return state;
+    }
+}
 
 export default combineReducers({
     items,
-    filter
+    filters
 })

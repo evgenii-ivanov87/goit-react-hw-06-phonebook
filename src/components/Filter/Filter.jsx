@@ -1,6 +1,8 @@
-  
-import PropTypes from 'prop-types';
+ import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import s from './Filter.module.css';
+import phonebookActions from '../../redux/phonebook/phonebook-actions';
+
 
 function Filter({ value, onChange }) {
   return (
@@ -16,4 +18,12 @@ Filter.propTypes = {
   onChange: PropTypes.func.isRequired,
 };
 
-export default Filter;
+const mapStateToProps= state => ({
+  value: state.contacts.filter,
+})
+
+const mapPropsToDispatch = dispath => ({
+  onChange: event => dispath(phonebookActions.filterContacts(event.target.value)),
+})
+
+export default connect(mapStateToProps,mapPropsToDispatch)(Filter);

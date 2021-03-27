@@ -8,5 +8,5 @@ const rootReduser = combineReducers({
 })
 
 const store = createStore(rootReduser, composeWithDevTools())
-
+console.log(store)
 export default store
