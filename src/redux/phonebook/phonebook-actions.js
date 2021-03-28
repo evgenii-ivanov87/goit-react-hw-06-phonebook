@@ -1,6 +1,6 @@
 import shortid from 'shortid'
 import { createAction } from '@reduxjs/toolkit'
-// import types from './phonebook-types'
+
 
 const addContact = createAction('phonebook/add', (name, number) => ({
     payload: {

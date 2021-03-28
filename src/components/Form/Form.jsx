@@ -71,6 +71,9 @@ class Form extends Component {
           <input
             type="text"
             name="name"
+             pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+            title="Имя может состоять только из букв, апострофа, тире и пробелов. Например Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan и т. п."
+            required
             value={this.state.name}
             placeholder="Ivanov Ivan"
             onChange={this.handleChange}
@@ -83,6 +86,9 @@ class Form extends Component {
           <input
             type="tel"
             name="number"
+            pattern="(\+?( |-|\.)?\d{1,2}( |-|\.)?)?(\(?\d{3}\)?|\d{3})( |-|\.)?(\d{3}( |-|\.)?\d{4})"
+            title="Номер телефона должен состоять из 11-12 цифр и может содержать цифры, пробелы, тире, пузатые скобки и может начинаться с +"
+            required
             value={this.state.number}
             placeholder="123-12-45"
             onChange={this.handleChange}
