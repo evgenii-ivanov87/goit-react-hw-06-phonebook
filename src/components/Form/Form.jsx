@@ -1,37 +1,27 @@
-import { Component } from 'react';
-import PropTypes from 'prop-types';
+import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
+import { getContacts } from '../../redux/phonebook/phonebook-selectors';
+import * as phonebookOperations from '../../redux/phonebook/phonebook-operations';
 import s from './Form.module.css';
-import { connect } from 'react-redux'
-import phonebookActions from '../../redux/phonebook/phonebook-actions'
 
-class Form extends Component {
-  state = {
-    name: '',
-    number: '',
-  };
+export default function MyForm() {
+ 
+  const contacts = useSelector(getContacts);
+  const dispatch = useDispatch();
+  const onSubmit = (name, number) =>
+    dispatch(phonebookOperations.addContact(name, number));
 
-  static propTypes = {
-    onSubmit: PropTypes.func.isRequired,
-    contacts: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        number: PropTypes.string.isRequired,
-      }),
-    ),
-  };
+  const [name, setName] = useState('');
+  const [number, setNumber] = useState('');
 
-  handleChange = e => {
-    this.setState({ [e.currentTarget.name]: e.currentTarget.value });
-  };
-
-  contactMatching = () => {
-    const { name, number } = this.state;
-    const { contacts } = this.props;
+  const contactMatching = () => {
     const namesInPhonebook = contacts.reduce(
       (acc, contact) => [...acc, contact.name],
       [],
     );
+
     const numbersInPhonebook = contacts.reduce(
       (acc, contact) => [...acc, contact.number],
       [],
@@ -51,63 +41,51 @@ class Form extends Component {
     }
   };
 
-  handleSubmit = e => {
-    const { name, number } = this.state;
-
+  const handleSubmit = e => {
     e.preventDefault();
-    this.setState({ name: '', number: '' });
-    if (this.contactMatching()) {
+    setName('');
+    setNumber('');
+
+    if (contactMatching()) {
       return;
     }
 
-    this.props.onSubmit(name, number);
+    onSubmit(name, number);
   };
 
-  render() {
-    return (
-      <form onSubmit={this.handleSubmit} className={s.form}>
-        <label className={s.label}>
-          Name
-          <input
-            type="text"
-            name="name"
-             pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+  return (
+    <form onSubmit={handleSubmit} className={s.form}>
+      <label>
+        Name
+        <input
+          type="text"
+          name="name"
+          value={name}
+          placeholder="Ivanov Ivan"
+           pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
             title="Имя может состоять только из букв, апострофа, тире и пробелов. Например Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan и т. п."
             required
-            value={this.state.name}
-            placeholder="Ivanov Ivan"
-            onChange={this.handleChange}
-            className={s.input}
-          />
-        </label>
-
-        <label className={s.label}>
-          Number
-          <input
-            type="tel"
-            name="number"
-            pattern="(\+?( |-|\.)?\d{1,2}( |-|\.)?)?(\(?\d{3}\)?|\d{3})( |-|\.)?(\d{3}( |-|\.)?\d{4})"
-            title="Номер телефона должен состоять из 11-12 цифр и может содержать цифры, пробелы, тире, пузатые скобки и может начинаться с +"
-            required
-            value={this.state.number}
-            placeholder="123-12-45"
-            onChange={this.handleChange}
-            className={s.input}
-          />
-        </label>
+          onChange={e => setName(e.currentTarget.value)}
+          className={s.input}
+        />
+      </label>
+      <label>
+        Number
+        <PhoneInput
+          country={'ua'}
+          value={number}
+          pattern="(\+?( |-|\.)?\d{1,2}( |-|\.)?)?(\(?\d{3}\)?|\d{3})( |-|\.)?(\d{3}( |-|\.)?\d{4})"
+           title="Номер телефона должен состоять из 11-12 цифр и может содержать цифры, пробелы, тире, пузатые скобки и может начинаться с +"
+          required
+          placeholder="123-12-45"
+          onChange={setNumber}
+        />
+      </label>
+      <div className={s.buttonWrapper}>
         <button type="submit" className={s.button}>
           Add contact
         </button>
-      </form>
-    );
-  }
+      </div>
+    </form>
+  );
 }
-const mapStateToProps= state => ({
-  contacts: state.contacts.items, 
-})
-
-const mapDispatchToProps = dispatch => ({
-  onSubmit:( name, number )=> dispatch(phonebookActions.addContact( name, number )),
-})
-
-export default connect(mapStateToProps,mapDispatchToProps)(Form);

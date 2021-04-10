@@ -1,42 +1,43 @@
-import { combineReducers } from "redux"
-import { createReducer } from '@reduxjs/toolkit'
-import actions from './phonebook-actions'
-// import types from './phonebook-types'
-
+import { combineReducers } from 'redux';
+import { createReducer } from '@reduxjs/toolkit';
+import {
+  addContactRequest,
+  addContactSuccess,
+  addContactError,
+  deleteContactRequest,
+  deleteContactSuccess,
+  deleteContactError,
+  changeFilter,
+  fetchContactsRequest,
+  fetchContactsSuccess,
+  fetchContactsError,
+} from './phonebook-actions';
 
 const items = createReducer([], {
-    [actions.addContact]: (state, { payload }) => [...state, payload],
-    [actions.deleteContacts]: (state, { payload }) =>state.filter(({id})=> id !== payload),
-})
+  [fetchContactsSuccess]: (state, { payload }) => payload,
+  [addContactSuccess]: (state, { payload }) => [payload, ...state],
+  [deleteContactSuccess]: (state, { payload }) =>
+    state.filter(({ id }) => id !== payload),
+});
 
+const filter = createReducer('', {
+  [changeFilter]: (state, { payload }) => payload,
+});
 
-// const items = (state = [], { type, payload }) => {
-    
-//     switch (type) {
-//         case types.ADD:
-//             return [...state, payload];
-//         case types.DELETE:
-//             return state.filter(({id})=> id !== payload)
-//         default:
-//             return state;
-//     }
-// }
-
-const filters = createReducer('', {
-    [actions.filterContacts]:(_, { payload })=>payload
-})
-
-// const filters = (state = '', { type, payload }) => {
-//     switch (type) {
-//         case types.FILTERS:
-//             return  payload;
-        
-//         default:
-//             return state;
-//     }
-// }
+const loading = createReducer(false, {
+  [fetchContactsRequest]: () => true,
+  [fetchContactsSuccess]: () => false,
+  [fetchContactsError]: () => false,
+  [addContactRequest]: () => true,
+  [addContactSuccess]: () => false,
+  [addContactError]: () => false,
+  [deleteContactRequest]: () => true,
+  [deleteContactSuccess]: () => false,
+  [deleteContactError]: () => false,
+});
 
 export default combineReducers({
-    items,
-    filters
-})
+  items,
+  filter,
+  loading,
+});

@@ -1,35 +1,23 @@
-import shortid from 'shortid'
-import { createAction } from '@reduxjs/toolkit'
+import { createAction } from '@reduxjs/toolkit';
 
+export const fetchContactsRequest = createAction(
+  'contacts/fetchContactsRequest',
+);
+export const fetchContactsSuccess = createAction(
+  'contacts/fetchContactsSuccess',
+);
+export const fetchContactsError = createAction('contacts/fetchContactsError');
 
-const addContact = createAction('phonebook/add', (name, number) => ({
-    payload: {
-        id: shortid.generate(),
-        name,
-        number,
-    }
-})  );
-const deleteContacts = createAction('phonebook/delete')
-const filterContacts = createAction('phonebook/filter')
+export const addContactRequest = createAction('contacts/addContactRequest');
+export const addContactSuccess = createAction('contacts/addContactSuccess');
+export const addContactError = createAction('contacts/addContactError');
 
-// const addContact = (name, number) => ({
-//     type: types.ADD,
-//     payload: {
-//         id: shortid.generate(),
-//       name,
-//       number,
-//     }
-// })
+export const deleteContactRequest = createAction(
+  'contacts/deleteContactRequest',
+);
+export const deleteContactSuccess = createAction(
+  'contacts/deleteContactSuccess',
+);
+export const deleteContactError = createAction('contacts/deleteContactError');
 
-// const deleteContacts = (contactId) => ({
-//     type: types.DELETE,
-//     payload: contactId
-// })
-
-// const filterContacts = (value) => ({
-//     type: types.FILTERS,
-//         payload: value
-    
-// })
-
-export default { addContact, deleteContacts, filterContacts };
+export const changeFilter = createAction('contacts/changeFilter');

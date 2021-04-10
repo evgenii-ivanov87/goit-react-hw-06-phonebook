@@ -23,5 +23,6 @@
 
 .button {
   margin-left: 10px;
-  width: 80px;
+  width: 30px;
+  border-radius: 5px;
 }
